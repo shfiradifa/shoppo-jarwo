@@ -1,16 +1,145 @@
-# shoppo_jarwo
+# Tugas 7
 
-A new Flutter project.
+## Perbedaan utama antara stateless dan statefull widget dalam konteks pengembangan aplikasi flutter
+Dalam konteks pengembangan aplikasi flutter, `StatelessWidget` dan `StatefullWidget` memiliki beberapa perbedaan utama dalam mengatur kondisi atau state dari widget tersebut, yaitu:
+- `Stateless Widget` bersifat statis, sedangkan `Stateful Widget` bersifat dinamis.
+- `Stateless Widget` memiliki 1 objek yang mewakilinya, sedangkan `Statefull Widget` memiliki 2 objek yang mewakilinya, yaitu statefull widget itu sendiri dan objek state yang mengelola keadaannya.
+- `Stateless Widget` tidak dapat dilakukan perubahan atau pembaruan tampilan, sedangkan `Statefull Widget` masih dapat dilakukan perubahan atau pembaruan tampilan setiap saat.
 
-## Getting Started
+## Widget yang digunakan pada Tugas 7
+- `MyApp`:
+- `MyHomePage`:
+- `SingleChildScrollView`:
+- `Padding`:
+- `Column`:
+- `Text`:
+- `GridView.count`:
+- `ShopCard`:
+- `Material`:
+- `InkWell`:
+- `Container`:
+- `Center`:
+- `Icon`:
 
-This project is a starting point for a Flutter application.
+## Implementasi Checklist
+1. Membuat direktori `shoppo-jarwo`
+2. Meng-generate project baru flutter dengan nama `shoppo_jarwo` dengan perintah `flutter create shoppo_jarwo`
+3. Membuat file `menu.dart` dalam sub-direktori `lib` dan meng-import package `material.dart` dari `flutter` di dalamnya.
+4. Pada file `main.dart` dalam sub-direktori `lib` saya meng-import `menu.dart` dari `shoppo_jarwo` dan memindahkan class `MyHomePage` beserta `_MyHomePageState` ke dalam file `medu.dart` sebelumnya.
+5. Mengganti widget pada `menu.dart` yang semula statefull menjadi stateless. Kemudian saya menambahkan beberapa widget, seperti card dan teks dengan kode sebagai berikut:
+```
+import 'package:flutter/material.dart';
 
-A few resources to get you started if this is your first Flutter project:
+class MyHomePage extends StatelessWidget {
+    MyHomePage({Key? key}) : super(key: key);
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    final List<ShopItem> items = [
+        ShopItem("Lihat Produk", Icons.checklist, Colors.lightGreen),
+        ShopItem("Tambah Produk", Icons.add_shopping_cart, Colors.pink),
+        ShopItem("Logout", Icons.logout, Colors.deepPurple),
+    ];
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Shoppo Jarwo',
+            ),
+          ),
+          body: SingleChildScrollView(
+            // Widget wrapper yang dapat discroll
+            child: Padding(
+              padding: const EdgeInsets.all(10.0), // Set padding dari halaman
+              child: Column(
+                // Widget untuk menampilkan children secara vertikal
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    // Widget Text untuk menampilkan tulisan dengan alignment center dan style yang sesuai
+                    child: Text(
+                      'PBP Shop', // Text yang menandakan toko
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  // Grid layout
+                  GridView.count(
+                    // Container pada card kita.
+                    primary: true,
+                    padding: const EdgeInsets.all(20),
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    crossAxisCount: 3,
+                    shrinkWrap: true,
+                    children: items.map((ShopItem item) {
+                      // Iterasi untuk setiap item
+                      return ShopCard(item);
+                    }).toList(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+    }
+}
+
+class ShopItem {
+  final String name;
+  final IconData icon;
+  final Color color;
+
+  ShopItem(this.name, this.icon, this.color);
+}
+
+class ShopCard extends StatelessWidget {
+  final ShopItem item;
+
+  const ShopCard(this.item, {super.key}); // Constructor
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: item.color,
+      child: InkWell(
+        // Area responsive terhadap sentuhan
+        onTap: () {
+          // Memunculkan SnackBar ketika diklik
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(SnackBar(
+                content: Text("Kamu telah menekan tombol ${item.name}!")));
+        },
+        child: Container(
+          // Container untuk menyimpan Icon dan Text
+          padding: const EdgeInsets.all(8),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  item.icon,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                const Padding(padding: EdgeInsets.all(3)),
+                Text(
+                  item.name,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+## Implementasi BONUS
+[![image.png](https://ibb.co/xLMwp9C)](https://ibb.co/xLMwp9C)
