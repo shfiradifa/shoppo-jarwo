@@ -7,19 +7,19 @@ Dalam konteks pengembangan aplikasi flutter, `StatelessWidget` dan `StatefullWid
 - `Stateless Widget` tidak dapat dilakukan perubahan atau pembaruan tampilan, sedangkan `Statefull Widget` masih dapat dilakukan perubahan atau pembaruan tampilan setiap saat.
 
 ## Widget yang digunakan pada Tugas 7
-- `MyApp`:
-- `MyHomePage`:
-- `SingleChildScrollView`:
-- `Padding`:
-- `Column`:
-- `Text`:
-- `GridView.count`:
-- `ShopCard`:
-- `Material`:
-- `InkWell`:
-- `Container`:
-- `Center`:
-- `Icon`:
+- `MyApp`: Berfungsi me-manage aspek-aspek penting dari `MaterialApp` seperti, gesture, navigasi, tema, dan konfigurasi lainnya.
+- `MyHomePage`: Berfungsi sebagai halaman utama aplikasi yang me-return `Scaffold` yang berisi struktur layout dasar seperti floating action button, body, app bar, dan lainnya.
+- `SingleChildScrollView`: Berfungsi untuk dapat membuat konten yang melebihi ukuran layar dapat di-scroll secara vertikal atau horizontal. Widget ini yang membungkus `Padding` yang berisi `Column`. Dalam hal ini, digunakan dalam memberi jarak pada seluruh sisi konten dengan pinggiran layar.
+- `Padding`: Berfungsi mengatur jarak pada bagian semua sisi, atas, kanan, bawah, ataupun kiri dari widget child.
+- `Column`: Berfungsi mengatur letak/posisi widget secara vertikal. Dalam hal ini, digunakan dalam menampilkan judul dan grid layout.
+- `Text`: Berfungsi menampilkan teks dengan pengaturan gaya, ukuran, warna, atau lainnya. Dalam hal ini, digunakan dalam judul `PBP Shop`.
+- `GridView.count`: Berfungsi menampilkan widget child yang berbentuk grid dengan jumlah kolom statis. Dalam hal ini, digunakan untuk menampilkan tiga button dengan teks dan icon.
+- `ShopCard`: Berfungsi menampilkan tiap item-nya dalam grid layout dengan ikon, teks, dan warna yang sesuai. Dalam hal ini, digunakan untuk menampilkan `InkWell` dan `Container` dari sebuah `Material`.
+- `Material`: Berfungsi memberikan visual effect Material Design pada widget, seperti warna, bentuk, atau elevasi. Dalam hal ini, digunakan dalam memberi warna untuk setiap item yang disusun dalam grid layout
+- `InkWell`: Berfungsi memberikan visual effect ketika user menyentuh widget child. Dalam hal ini, digunakan untuk memberikan respons saat user meng-click sebuah item dalam grid layout.
+- `Container`: Berfungsi menampung dan mengatur dekorasi seperti padding, border, margin, warna, background, dan lainnya pada widget child.
+- `Center`: Berfungsi mengatur posisi widget child untuk berada di tengah layar.
+- `Icon`: Berfungsi menampilkan icon beserta dekorasinya enggunakan properti size, color, opacity, dan lainnya.
 
 ## Implementasi Checklist
 1. Membuat direktori `shoppo-jarwo`
