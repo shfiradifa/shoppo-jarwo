@@ -143,3 +143,43 @@ class ShopCard extends StatelessWidget {
 ```
 ## Implementasi BONUS
 [![image.png](https://ibb.co/xLMwp9C)](https://ibb.co/xLMwp9C)
+
+# Tugas 8
+
+## Jelaskan perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()`, disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat!
+Perbedaan antara keduanya terletak pada apa yang dilakukan kepada route yang berada pada atas stack. Method `Navigator.push()` akan memunculkan dan menampilkan route yang baru saja ditambahkan. Sedangakan method `Navigator.pushReplacement()` akan memindahkan halaman dari route yang sedang ditampilkan kepada pengguna ke suatu route yang diberikan.
+
+Contoh penggunaan method `Navigator.push()` berada pada button **Tambah Produk** yang akan memunculkan halaman form setelah button tersebut ditekan. Contoh penggunaan method `Navigator.pushReplacement()` berada pada button list drawer **Halaman Utama** yang akan memindahkan halaman ketika sebelum di-klik ke halaman `MyHomePage()`.
+
+## Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
+1. **Container**: Sebagai wadah untuk menampung child widget dengan tampilan yang rapi dan teratur dengan efek visual tertentu (ukuran, warna, margin, padding, border, atau lainnya).
+2. **Row dan Column**: Untuk menyusun child widget secara horizontal atau vertikal.
+3. **Stack**: Untuk menyusun child secara bertumpukan dengan efek transparansi, shaddow, dan gradient.
+4. **Padding**: Untuk memberikan jarak antara child widget dengan batas widget lainnya.
+5. **Expanded**: Untuk membuat child widget mengisi space yang terdapat di dalam Row, Column, atau Flex agar dapat menciptakan ruang tampilan yang proporsional antara child widget.
+6. **GridView**: Untuk menampilkan komponen atau child widget dalam bentuk grid sehingga tampilannya menjaid lebih terstruktur dan rapi. Cocok untuk data yang banyak dan beragam.
+7. **ListView**: Merupakan salah satu widget scrolling yang paling umum digunakan. Dapat berisi banyak child widget dan mengatur alignment, scroll direction, dan separation child widget sehingga memungkinkan tampilan data yang panjang dan berurut.
+
+## Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
+1. **TextFormField**: Elemen input untuk memasukkan teks. Pada aplikasi Flutter ini digunakan untuk variable `_name` dan `_amount` yang bertipe data string dan integer. TextFormField ini memiliki validator yang berguna untuk memastikan bahwa field harus terisi sesuai dengan tipe datanya masing-masing.
+2. **ElevatedButton**: Elemen input sebagai button untuk menyimpan form. Pada aplikasi Flutter ini digunakan ketika button `Save` ditekan, maka seluruh value dari field akan diperiksa validasinya melalui `_formKey.currentState!.validate()`. Jika sudah tervalidasi, maka akan ditampilkan informasi message bahwa produk berhasil tersimpan.
+
+## Bagaimana penerapan clean architecture pada aplikasi Flutter?
+1. **Lapisan domain**: Membangun lapisan domain yang menjadi pusat dari aplikasi yang mengandung model data dan logika bisnis.
+2. **Lapisan aplikasi**: Menggunakan lapisan aplikasi yang merealisasikan kasus penggunaan aplikasi dan menghubungkan lapisan infrastruktur dengan presentasi.
+3. **Lapisan infrastruktur**: Menyusun lapisan infrastruktur yang menangani interaksi dengan dunia luar seperti database, web server, user interface.
+4. **Lapisan presentasi**: Mendesain lapisan presentasi yang berisi kode yang merender interface pengguna di mana request dibuat dan me-return respons.
+
+
+## Implementasi checklist
+### 1. Menambahkan Drawer Menu Untuk Navigasi
+Untuk memudahkan navigasi ke halaman-halaman lainnya, saya menambahkan drawer pada bagian kiri halaman di aplikasi Flutter. Pertama-tama saya membuat berkas `left_drawer.dart` dalam folder baru `widgets`. Pada berkas ini akan diisi dengan fungsi untuk menampilkan fitur navigasi yang terdiri dari header dan set list menu (Halaman Utama & Tambah Produk). Kemudian, kedua menu di-routing ke halamannya masing-masing menggunakan Navigator Push Replacement. Menu **Halaman Utama** di-routing ke `MyHomePage()` dan **Tambah Produk** di-routing ke `ShopFormPage()`.
+
+### 2. Menambahkan Form dan Elemen Input serta Memunculkan Data
+Untuk memasukkan data barang pada aplikasi, saya membuat form sederhana dengan parameter `_name`, `_amount`, dan `_description`. Pertama-tama saya membuat berkas `shoplist_form.dart` dalam folder baru `screens`. Karena sebelumnya telah membuat drawer, maka kita perlu meng-import berkas `left_drawer.dart`. Saya menggunakan widget `Form` sebagai wadah bagi beberapa input field widget nantinya. Pada widget ini akan diisi `key` berupa variable baru bernama `_formKey` yang akan menjadi handler dari form state, validasi form, dan penyimpanan form. Selanjutnya, untuk membuat child widget di dalamnya menjadi scrollable, saya menggunakan widget `SingleChildScrollView`. Lalu, untuk `children` akan diisi 3 `TextFormField` untuk nama, harga, dan deskripsi produk. Kemudian, saya menambahkan button `Save` untuk menyimpan produk dengan validasi setiap value input tidak boleh kosong. Selain itu, saya juga menambahkan pop-up tampilan nama, harga, dan deskripsi produk sesaat ketika telah melakukan tap button `Save`.
+
+### 3. Menambahkan Fitur Navigasi pada Tombol
+Untuk menambahkan fitur navigasi pada tiga button widget ketika ditekan, pada berkas `menu.dart` dilakukan penambahan kode yang terletak pada atribut `onTap` dari `InkWell` dengan menggunakan Navigator Push.
+
+### 4. Refactoring File
+Terakhir saya melakukan refactoring file dengan memisahkan isi widget `ShopItem` pada berkas `menu.dart` ke dalam berkas baru yang bernama `shop_card.dart`. Kemudian, berkas tersebut akan dimasukkan ke folder `widgets` dengan meng-import `shoplist_form.dart`. Setelah itu, pindahkan berkas `menu.dart` ke dalam folder `screens`.
