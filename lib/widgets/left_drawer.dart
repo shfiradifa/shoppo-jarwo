@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoppo_jarwo/screens/list_product.dart';
 import 'package:shoppo_jarwo/screens/menu.dart';
 // TODO: Impor halaman ShopFormPage jika sudah dibuat (DONE)
 import 'package:shoppo_jarwo/screens/shoplist_form.dart';
@@ -19,7 +20,7 @@ class LeftDrawer extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  'Shopping List',
+                  'Shoppo Jarwo',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -68,6 +69,17 @@ class LeftDrawer extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => ShopFormPage(),
                 )
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_basket),
+            title: const Text('Daftar Produk'),
+            onTap: () {
+              // Route menu ke halaman produk
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductPage()),
               );
             },
           ),
