@@ -187,18 +187,42 @@ Terakhir saya melakukan refactoring file dengan memisahkan isi widget `ShopItem`
 # TUGAS 9
 
 ##  Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
-
-## Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+Kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu. Kita dapat memfungsikan jsonDecode dari dart:convert untuk mengkonversikan string JSON ke dalam Map. Ini akan menjadi pendekatan yang lebih efisien jika kita hanya perlu mengambil beberapa nilai spesifik dari data JSON tanpa memerlukan validasi atau manipulasi data yang kompleks. Namun, apabila kita memerlukan validasi data, organisir logika bisnis, dan untuk mempermudah pemahaman struktur data, akan lebih baik jika membuat model terlebih dahulu sebelum melakukan pengambilan data JSON.
+## Jelaskan fungsi dari `CookieRequest` dan jelaskan mengapa instance `CookieRequest` perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+`CookieRequest` adalah kelas dalam Flutter yang berfungsi untuk mengelola cookies. `CookieRequest` berfungsi mengambil dan menyimpan cookies saat berinteraksi dengan web server. Instance `CookieRequest` perlu untuk dibagikan ke semua komponen di aplikasi Flutter karena cookies sering digunakan untuk berbagai tujuan seperti autentikasi pengguna, pelacakan sesi, dan penyimpanan referensi pengguna. Dengan membagikan instance `CookieRequest` yang sama, akan menjamin bahwa semua komponen aplikasi memiliki akses ke informasi yang sama dan konsisten.
 
 ## Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+Pertama, ambil data JSON bisa menggunakan API web dengan HTTP GET atau POST. Kemudian, data JSON tersebut di-phrase dan disesuaikan dengan struktur data Dart dengan menggunakan fungsi jsonDecode() dari package dart:convert. Struktur data itulah yang akan dipakai untuk membuat widget Flutter (ex: Card, ListView) untuk ditampilkan kepada user nantinya.
 
 ## Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+Mekanisme autentikasi dimulai dari penginputan data dari pengguna untuk masuk ke dalam akun pribadi mereka melalui form login pada aplikasi Flutter. Selanjutnya, Data tersebut akan dikirimkan ke server dari aplikasi Flutter dalam bentuk request POST ke endpoint. Setelah itu, server Django akan memverifikasi data tersebut dengan mengecek username dan password yang diinput pengguna dan dicocokan dengan data yang terdapat di database. Apabila data telah berhasil terverifikasi, server akan membuat token autentikasi untuk user yang akan dikirimkan kembali ke aplikasi Flutter sebagai respons premintaan. Token ini akan disimpan di dalam penyimpanan lokal aplikasi Flutter untuk digunakan setiap permintaan berikutnya ke server. Setelah proses autentikasi ini selesai, barulah aplikasi Flutter akan melakukan navigasi ke halaman selanjutnya untuk menampilkan menu.
 
 ## Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+- `Container` = Untuk menampung widget.
+- `Text` = Untuk menampilkan teks.
+- `Form` = Untuk membuat form.
+- `Icon` = Untuk membuat ikon.
+- `Padding` = Untuk mengatur tampilan.
+- `DropdownButton` = Untuk membuat dropdown.
+- `Row` = Digunakan untuk menempatkan widget secara horizontal.
+- `Column` = Digunakan untuk menempatkan widget secara vertikal.
+- `TextFormField` = Sebagai tempat menginput teks pada form.
+- `TextButton` = Untuk membuat button.
+- `TextStyle` = Untuk styling pada text.
+- `Drawer` = Untuk menampilkan menu yang tersembunyi pada sisi kanan atau kiri sebuah aplikasi dan berpindah halaman.
+- `SingleChildScrollView` = Digunakan untuk membuat widget yang dapat di scroll
 
 ## Implementasi checklist
 ### 1. Integrasi Autentikasi Django-Flutter
-### 2. Pembuatan Model Kustom
-### 3. Penerapan Fetch Data dari Django Untuk Ditampilkan ke Flutter
+Melakukan setup pada Django dengan membuat django-app bernama `authentication` pada proyek Django. Kemudian menambahkan "authentication" ke INSTALLED_APPS di settings.py. Kemudian install library django-cors-headers dan menambahkan `corsheaders` ke INSTALLED_APPS dan middleware-nya pada settings.py. Setelah itu, atur variabel CORS dan keamanan pada settings.py. Pada authentication/views.py dibuat fungsi untuk login dan fungsi tersebut diimport ke dalam authentication/urls.py untuk dibuat path url-nya sebagai routing.
+
+Selanjutnya kita perlu melakukan setup pada Flutter dengan melakukan instalasi package Flutter yang telah disiapkan. Setelah itu, untuk menyediakan `CookieRequest` ke seluruh child widgets, dilakukan modifikasi terhadap root widget dengan Provider. Terakhir, tambahkan berkan `login.dart` dalam direktori lib/screens untuk difungsikan untuk kode halaman login.
+
+### 2. Pembuatan Model Kustom dan Penerapan Fetch Data dari Django Untuk Ditampilkan ke Flutter
+Pembuatan model kustom dilakukan dengan membuat model Dart terlebih dahulu dari data JSON dengan memanfaatkan situs Quicktype. Kode yang telah dibuat pada situs tersebut akan disalin ke dalam file baru `product.dart` pada direktori lib/models. Kemudian, dilakukan Fetch Data dari Django ke Flutter dan menambahkan dependency HTTP dari terminal. Lalu, pada berkas `AndroidManifest.xml` ditambahkan izin internet. Untuk menampilkan list produk dari Django pada aplikasi Flutter, buat kode pada berkas `list_product.dart` dan dihubungkan dengan `CookieRequest`.
+
 ### 4. Integrasi Form Flutter Dengan Layanan Django
+Integrasi dilakukan dengan menambahkan fungsi untuk membuat produk baru pada `views.py` di direktori authentication Django. Kemudian buatkan routing untuk fungsi tersebut dengan meng-import fungsi yang baru dibuat pada berkas `urls.py` dan menambahkan path url-nya. Setelah itu, halaman `shoplist_form.dart` akan dihubungkan dengan `CookieRequest`. Kemudian, modifikasi bagian kode `onPressed` yang sesuai agar dapat menambahkan produk baru.
+
 ### 5. Implementasi Fitur Logout
+Untuk mengimpelentasi fitur logout, sama seperti login, pertama-tama membuat fungsi untuk logout pada berkasi `views.py` di direktori authentication pada Django. Fungsi tersebut selanjutnya akan di-import ke dalam `urls.py` pada direktori yang sama dan ditambahkan path url-nya untuk dapat dirouting. Lalu, menambahkan fungsi logout pada berkan `shop_card.dart` aplikasi Flutter.
